@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh:*)",
+      "Bash(ping:*)",
+      "Bash(host:*)",
+      "Bash(nc:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

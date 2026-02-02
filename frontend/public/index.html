@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 DataVet - Retro Veterinary Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- CRT Screen Effect Overlay -->
+  <div class="crt-overlay"></div>
+  <div class="scanlines"></div>
+  
+  <!-- Main Container -->
+  <div class="arcade-cabinet">
+    <!-- Header -->
+    <header class="arcade-header">
+      <div class="logo-container">
+        <div class="logo-glow">
+          <h1 class="logo">
+            <span class="logo-icon">🐾</span>
+            DATA<span class="logo-highlight">VET</span>
+            <span class="logo-icon">🐾</span>
+          </h1>
+        </div>
+        <p class="tagline">★ RETRO VETERINARY MANAGEMENT SYSTEM ★</p>
+        <div class="coin-display">
+          <span class="blink">INSERT COIN</span>
+          <span class="credits">CREDITS: ∞</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="arcade-nav">
+      <button class="nav-btn active" data-section="home" onclick="showSection('home')">
+        <span class="btn-icon">🏠</span>
+        <span class="btn-text">HOME</span>
+      </button>
+      <button class="nav-btn" data-section="pets" onclick="showSection('pets')">
+        <span class="btn-icon">🐕</span>
+        <span class="btn-text">PETS</span>
+      </button>
+      <button class="nav-btn" data-section="vets" onclick="showSection('vets')">
+        <span class="btn-icon">👨‍⚕️</span>
+        <span class="btn-text">VETS</span>
+      </button>
+      <button class="nav-btn" data-section="calendar" onclick="showSection('calendar')">
+        <span class="btn-icon">📅</span>
+        <span class="btn-text">CALENDAR</span>
+      </button>
+      <button class="nav-btn" data-section="appointments" onclick="showSection('appointments')">
+        <span class="btn-icon">📋</span>
+        <span class="btn-text">BOOK</span>
+      </button>
+      <button class="nav-btn" data-section="search" onclick="showSection('search')">
+        <span class="btn-icon">🔍</span>
+        <span class="btn-text">SEARCH</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="arcade-screen">
+      <!-- Home Section -->
+      <section id="home" class="game-section active">
+        <div class="welcome-screen">
+          <div class="pixel-art-container">
+            <pre class="ascii-art">
+    /\_____/\
+   /  o   o  \
+  ( ==  ^  == )
+   )         (
+  (           )
+ ( (  )   (  ) )
+(__(__)___(__)__)
+            </pre>
+          </div>
+          <h2 class="section-title glitch" data-text="WELCOME PLAYER!">WELCOME PLAYER!</h2>
+          <div class="stats-panel">
+            <div class="stat-box">
+              <span class="stat-label">TOTAL PETS</span>
+              <span class="stat-value" id="total-pets">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">VETS ON DUTY</span>
+              <span class="stat-value" id="total-vets">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">APPOINTMENTS</span>
+              <span class="stat-value" id="total-appointments">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">TODAY</span>
+              <span class="stat-value" id="today-appointments">0</span>
+            </div>
+          </div>
+          <div class="high-score-table">
+            <h3 class="table-title">★ TOP SPECIES ★</h3>
+            <div id="species-leaderboard" class="leaderboard">
+              <div class="score-row">
+                <span class="rank">1ST</span>
+                <span class="name">DOG</span>
+                <span class="score">---</span>
+              </div>
+              <div class="score-row">
+                <span class="rank">2ND</span>
+                <span class="name">CAT</span>
+                <span class="score">---</span>
+              </div>
+              <div class="score-row">
+                <span class="rank">3RD</span>
+                <span class="name">BIRD</span>
+                <span class="score">---</span>
+              </div>
+            </div>
+          </div>
+          <p class="instruction-text blink">PRESS START TO BEGIN YOUR QUEST!</p>
+        </div>
+      </section>
+
+      <!-- Pets Section -->
+      <section id="pets" class="game-section">
+        <h2 class="section-title">🐕 PET REGISTRY 🐕</h2>
+        
+        <!-- Add Pet Form -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">+ NEW PET +</h3>
+          <form id="pet-form" class="arcade-form">
+            <div class="form-row">
+              <label class="form-label">NAME:</label>
+              <input type="text" id="pet-name" class="arcade-input" placeholder="ENTER NAME..." required>
+            </div>
+            <div class="form-row">
+              <label class="form-label">SPECIES:</label>
+              <select id="pet-species" class="arcade-select" required>
+                <option value="">SELECT...</option>
+                <option value="DOG">🐕 DOG</option>
+                <option value="CAT">🐈 CAT</option>
+                <option value="BIRD">🐦 BIRD</option>
+                <option value="RABBIT">🐰 RABBIT</option>
+                <option value="HAMSTER">🐹 HAMSTER</option>
+                <option value="FISH">🐠 FISH</option>
+                <option value="REPTILE">🦎 REPTILE</option>
+                <option value="OTHER">❓ OTHER</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">BREED:</label>
+              <input type="text" id="pet-breed" class="arcade-input" placeholder="ENTER BREED...">
+            </div>
+            <div class="form-row">
+              <label class="form-label">AGE:</label>
+              <input type="number" id="pet-age" class="arcade-input" placeholder="0" min="0" max="50">
+            </div>
+            <div class="form-row">
+              <label class="form-label">OWNER:</label>
+              <input type="text" id="pet-owner" class="arcade-input" placeholder="OWNER NAME..." required>
+            </div>
+            <button type="submit" class="arcade-button submit-btn">
+              <span class="btn-glow"></span>
+              CREATE PET
+            </button>
+          </form>
+        </div>
+
+        <!-- Pet List -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">★ REGISTERED PETS ★</h3>
+          <div id="pets-list" class="item-grid">
+            <div class="loading-spinner">
+              <span class="spinner-dot">●</span>
+              <span class="spinner-text">LOADING...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vets Section -->
+      <section id="vets" class="game-section">
+        <h2 class="section-title">👨‍⚕️ VET ROSTER 👨‍⚕️</h2>
+        
+        <!-- Vet List -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">★ OUR VETERINARIANS ★</h3>
+          <div id="vets-list" class="vet-grid">
+            <div class="loading-spinner">
+              <span class="spinner-dot">●</span>
+              <span class="spinner-text">LOADING VETS...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Calendar Section -->
+      <section id="calendar" class="game-section">
+        <h2 class="section-title">📅 VET CALENDAR 📅</h2>
+        
+        <!-- Vet Selector -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">SELECT VET</h3>
+          <div class="calendar-controls">
+            <select id="calendar-vet-select" class="arcade-select" onchange="loadVetCalendar()">
+              <option value="">-- SELECT A VET --</option>
+            </select>
+            <div class="date-nav">
+              <button class="arcade-button small" onclick="navigateCalendar(-7)">◀ PREV WEEK</button>
+              <span id="calendar-date-range" class="date-range">SELECT A VET</span>
+              <button class="arcade-button small" onclick="navigateCalendar(7)">NEXT WEEK ▶</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar View -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">★ WEEKLY SCHEDULE ★</h3>
+          <div id="calendar-view" class="calendar-container">
+            <p class="no-data">SELECT A VET TO VIEW THEIR CALENDAR</p>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="arcade-panel">
+          <div class="calendar-legend">
+            <span class="legend-item"><span class="legend-dot available"></span> AVAILABLE</span>
+            <span class="legend-item"><span class="legend-dot booked"></span> BOOKED</span>
+            <span class="legend-item"><span class="legend-dot off"></span> OFF DUTY</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Appointments Section -->
+      <section id="appointments" class="game-section">
+        <h2 class="section-title">📋 BOOK APPOINTMENT 📋</h2>
+        
+        <!-- Add Appointment Form -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">+ SCHEDULE VISIT +</h3>
+          <form id="appointment-form" class="arcade-form">
+            <div class="form-row">
+              <label class="form-label">SELECT PET:</label>
+              <select id="appt-pet-select" class="arcade-select" required>
+                <option value="">-- SELECT PET --</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">SELECT VET:</label>
+              <select id="appt-vet-select" class="arcade-select" required onchange="loadAvailableSlots()">
+                <option value="">-- SELECT VET --</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">DATE:</label>
+              <input type="date" id="appt-date" class="arcade-input" required onchange="loadAvailableSlots()">
+            </div>
+            <div class="form-row">
+              <label class="form-label">TIME SLOT:</label>
+              <select id="appt-time-slot" class="arcade-select" required>
+                <option value="">-- SELECT DATE & VET FIRST --</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">TYPE:</label>
+              <select id="appt-type" class="arcade-select" required>
+                <option value="">SELECT...</option>
+                <option value="CHECKUP">💊 CHECKUP</option>
+                <option value="VACCINATION">💉 VACCINATION</option>
+                <option value="SURGERY">🏥 SURGERY</option>
+                <option value="GROOMING">✂️ GROOMING</option>
+                <option value="EMERGENCY">🚨 EMERGENCY</option>
+                <option value="DENTAL">🦷 DENTAL</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">NOTES:</label>
+              <textarea id="appt-notes" class="arcade-textarea" placeholder="ADDITIONAL NOTES..."></textarea>
+            </div>
+            <button type="submit" class="arcade-button submit-btn">
+              <span class="btn-glow"></span>
+              BOOK APPOINTMENT
+            </button>
+          </form>
+        </div>
+
+        <!-- Appointment List -->
+        <div class="arcade-panel">
+          <h3 class="panel-title">★ ALL APPOINTMENTS ★</h3>
+          <div id="appointments-list" class="item-grid">
+            <div class="loading-spinner">
+              <span class="spinner-dot">●</span>
+              <span class="spinner-text">LOADING...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search Section -->
+      <section id="search" class="game-section">
+        <h2 class="section-title">🔍 POWER SEARCH 🔍</h2>
+        
+        <div class="arcade-panel search-panel">
+          <div class="search-container">
+            <input type="text" id="search-input" class="arcade-input search-input" placeholder="ENTER SEARCH QUERY...">
+            <button class="arcade-button search-btn" onclick="performSearch()">
+              <span class="btn-glow"></span>
+              SEARCH
+            </button>
+          </div>
+          <div class="search-filters">
+            <label class="filter-option">
+              <input type="checkbox" id="search-pets" checked> PETS
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" id="search-appointments" checked> APPOINTMENTS
+            </label>
+          </div>
+        </div>
+
+        <div class="arcade-panel">
+          <h3 class="panel-title">★ SEARCH RESULTS ★</h3>
+          <div id="search-results" class="item-grid">
+            <p class="no-results">ENTER QUERY TO BEGIN SEARCH...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="arcade-footer">
+      <div class="footer-content">
+        <span class="copyright">© 2024 DATAVET ARCADE</span>
+        <span class="version">VERSION 2.0.0</span>
+        <span class="footer-art">◄◄ ▌▌ ►►</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
