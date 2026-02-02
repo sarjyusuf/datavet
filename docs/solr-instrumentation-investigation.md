@@ -18,18 +18,34 @@ Instrument Solr with Datadog APM using **Single Step Instrumentation (SSI)**.
 
 ## What We Tried
 
-### 1. Created Allow Rule in Datadog UI
+### 1. Created Allow Rules in Datadog UI
+
+**Attempt 1**: Process argument matching
+- **Rule**: `IF Process Arg contains -Dsolr.install.dir → ALLOW`
+- **Result**: ❌ Solr still not injected
+
+**Attempt 2**: Executable path matching
 - **Rule**: `IF Process Executable Full Path contains /opt/solr → ALLOW`
 - **Result**: ❌ Solr still not injected
 
-### 2. Enabled Debug Logging
+### 2. Manually Deployed Policy File
+- Copied allow rule `.bin` file to `/etc/datadog-agent/managed/rc-orgwide-wls-policy.bin`
+- Contents targeted `/opt/solr` path
+- **Result**: ❌ Solr still not injected
+
+### 3. Investigated User Breakglass Policy
+- Discovered `/etc/datadog-agent/user-wls-policy.bin` path (Priority 3, higher than Remote Config)
+- This is meant to override hardcoded policies
+- **Result**: Did not resolve issue due to env var inheritance (see Root Cause)
+
+### 5. Enabled Debug Logging
 Added to Solr's systemd override:
 ```
 Environment="DD_TRACE_DEBUG=true"
 Environment="DD_APM_INSTRUMENTATION_DEBUG=true"
 ```
 
-### 3. Observed Debug Logs
+### 6. Observed Debug Logs
 
 **WLS (Workload Selection) ALLOWED injection:**
 ```
@@ -41,7 +57,7 @@ Environment="DD_APM_INSTRUMENTATION_DEBUG=true"
 [./libinject.c:58] disabled flag set, not injecting
 ```
 
-### 4. Verified Environment Variable
+### 7. Verified Environment Variable
 ```bash
 $ cat /proc/<solr_pid>/environ | tr '\0' '\n' | grep DD_INSTRUMENT
 DD_INSTRUMENT_SERVICE_WITH_APM=false
